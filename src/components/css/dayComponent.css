@@ -1,0 +1,25 @@
+.dayComponent {
+    display: block;
+    float: left;
+    background: white;
+    width: 300px;
+    border: 1px solid #e5e5e5;
+    border-right: none;
+}
+
+.dayComponent .date {
+    padding: 10px 5px;
+}
+
+.dayComponent .dayName {
+    padding: 10px;
+    text-align: center;
+}
+
+.dayComponent .border-bottom {
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.dayComponent .meetingComponent {
+    margin-top: 2px; 
+}
