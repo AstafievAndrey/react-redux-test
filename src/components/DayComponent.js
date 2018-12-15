@@ -1,11 +1,29 @@
 import React, { Component } from 'react';
-import MeetingComponent from './MeetingComponent';
 import './css/dayComponent.css';
+import MeetingComponent from './MeetingComponent';
+import MeetingModalComponent from './MeetingModalComponent';
 
 class DayComponent extends Component {
+  state = {
+    showModalMeeting: false,
+  };
+
+  handleDoubleClick = e => {
+    console.log('doubleClick');
+    e.preventDefault();
+    this.setState({ showModalMeeting: true });
+  };
+
   render() {
+    const { showModalMeeting } = this.state;
     return (
-      <div className="dayComponent height-100">{this.renderTemplate()}</div>
+      <div
+        className="dayComponent height-100"
+        onDoubleClick={this.handleDoubleClick}
+      >
+        {this.renderTemplate()}
+        {showModalMeeting && <MeetingModalComponent />}
+      </div>
     );
   }
 
@@ -22,7 +40,9 @@ class DayComponent extends Component {
       <React.Fragment>
         <div className="border-bottom dayName">{day}</div>
         <div className="border-bottom date">{date}</div>
-        {this.renderMeetings()}
+        <div onDoubleClick={this.handleDoubleClick}>
+          {this.renderMeetings()}
+        </div>
       </React.Fragment>
     );
   }

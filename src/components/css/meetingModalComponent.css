@@ -1,0 +1,67 @@
+.meetingModalComponent {
+    display: block;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+    background: rgba(57, 57, 57, 0.90)
+}
+
+.meetingModal {
+    width: 330px;
+    background: white;
+    margin: 10% auto;    
+}
+
+.meetingModal>div {
+    padding: 5px;
+}
+
+.meetingModalTitle {
+    border-bottom: 1px solid #bebebe;
+    display: flex;
+    padding: 10px !important;
+}
+
+.meetingModalTitle .title{
+    flex: 1;
+}
+
+.meetingModalTitle .close {
+    cursor: pointer;
+}
+
+.meetingModalForm .row {
+    display: flex;
+    align-content: space-between;
+}
+
+.meetingModalForm {
+    min-height: 400px;
+}
+
+.meetingModal .addMember {
+    color: #297fd0;
+    text-decoration: none;
+    border-bottom: 1px dashed #297fd0;
+    cursor: pointer;
+}
+
+.meetingModalForm .row .column {
+    flex: 1;
+    padding: 5px;
+}
+
+.meetingModalForm .row .column.first {
+    flex: 0.7;
+}
+
+.meetingModal .meetingModalAction>div {
+    display: inline-block;
+    margin-left: 5px;
+}
+
+.meetingModalAction {
+    text-align: right;
+}
