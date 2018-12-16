@@ -9,28 +9,64 @@ class DayComponent extends Component {
   };
 
   handleDoubleClick = e => {
-    console.log('doubleClick');
     e.preventDefault();
     this.setState({ showModalMeeting: true });
   };
 
+  hideModalMeeting = () => {
+    this.setState({ showModalMeeting: false });
+  };
+
+  addMeeting = state => {
+    const { index } = this.props;
+    this.hideModalMeeting();
+    this.props.addMeeting(index, state);
+  };
+
   render() {
-    const { showModalMeeting } = this.state;
+    console.log('render DayComponent');
     return (
       <div
         className="dayComponent height-100"
         onDoubleClick={this.handleDoubleClick}
       >
         {this.renderTemplate()}
-        {showModalMeeting && <MeetingModalComponent />}
+        {this.renderMeetingModal()}
       </div>
     );
   }
 
+  renderMeetingModal() {
+    const { showModalMeeting } = this.state;
+    const { day, date } = this.props;
+    return (
+      <React.Fragment>
+        {showModalMeeting && (
+          <MeetingModalComponent
+            key={'addDay'}
+            day={day}
+            date={date}
+            addMeeting={this.addMeeting}
+            hideModal={this.hideModalMeeting}
+          />
+        )}
+      </React.Fragment>
+    );
+  }
+
   renderMeetings() {
-    const { meetings } = this.props;
+    const { meetings, day } = this.props;
+    console.log(this.props);
     return meetings.map((item, index) => {
-      return <MeetingComponent key={index} meeting={item} />;
+      return (
+        <MeetingComponent
+          key={index}
+          index={this.props.index}
+          day={day}
+          indexMeeting={index}
+          meeting={item}
+        />
+      );
     });
   }
 

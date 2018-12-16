@@ -1,33 +1,29 @@
 import React, { Component } from 'react';
 import './App.css';
 
-import { connect } from 'react-redux';
+import DayContainer from './containers/DayContainer';
 
-import DayComponent from './components/DayComponent';
+const DayWeek = [
+  'Понедельник',
+  'Вторник',
+  'Среда',
+  'Четверг',
+  'Пятница',
+  'Суббота',
+  'Воскресенье',
+];
 
 class App extends Component {
   renderTemplate() {
-    const { meetings } = this.props;
-    return meetings.map((item, index) => {
-      return (
-        <DayComponent
-          key={index}
-          day={item.day}
-          date={item.date}
-          meetings={item.meetings}
-        />
-      );
+    return DayWeek.map((item, index) => {
+      return <DayContainer key={index} day={item} index={index} date="date" />;
     });
   }
 
   render() {
-    console.log(this.props);
+    console.log('render App');
     return <div className="App height-100">{this.renderTemplate()}</div>;
   }
 }
-const mapStateToProps = store => {
-  return {
-    meetings: store.meetings,
-  };
-};
-export default connect(mapStateToProps)(App);
+
+export default App;
