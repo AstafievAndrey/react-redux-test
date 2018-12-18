@@ -18,20 +18,20 @@ class MeetingComponent extends Component {
   handleDoubleClick = e => {
     e.stopPropagation();
     this.showModalMeeting();
-    console.log(this.props);
+  };
+
+  updateMeeting = data => {
+    const { indexMeeting } = this.props;
+    this.props.updateMeeting(indexMeeting, data);
   };
 
   renderTemplate() {
     const { day } = this.props;
     const { timeBegin, timeEnd, members, title } = this.props.meeting;
     const { showModalMeeting } = this.state;
-    console.log(this.props);
     return (
       <React.Fragment>
-        <div onDoubleClick={this.handleDoubleClick}>
-          {' '}
-          {timeBegin} >> Встреча
-        </div>
+        <div onDoubleClick={this.handleDoubleClick}>{timeBegin} >> Встреча</div>
         {showModalMeeting && (
           <MeetingModalComponent
             day={day}
@@ -40,6 +40,7 @@ class MeetingComponent extends Component {
             timeEnd={timeEnd}
             members={members}
             hideModal={this.hideModalMeeting}
+            actionMeeting={this.updateMeeting}
           />
         )}
       </React.Fragment>

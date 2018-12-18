@@ -2,12 +2,23 @@ import React, { Component } from 'react';
 import './css/meetingModalComponent.css';
 
 class MeetingModalComponent extends Component {
-  state = {
-    title: '',
-    timeBegin: '',
-    timeEnd: '',
-    members: [],
-  };
+  constructor(props) {
+    super(props);
+    if (this.state === undefined) {
+      this.state = this.initState();
+    }
+  }
+
+  initState() {
+    const members = [...(this.props.members ? this.props.members : [''])];
+    return {
+      title: this.props.title || '',
+      timeBegin: this.props.timeBegin || '',
+      timeEnd: this.props.timeEnd || '',
+      day: this.props.day || '',
+      members,
+    };
+  }
 
   hideModal = () => {
     this.props.hideModal();
@@ -23,46 +34,48 @@ class MeetingModalComponent extends Component {
       });
     } else {
       const index = target.getAttribute('data-key');
-      let { members } = this.state;
+      let members = [...this.state.members];
       members[index] = target.value;
+      console.log(members);
       this.setState({ members });
     }
   };
 
   handleSubmit = e => {
     e.preventDefault();
-    this.props.addMeeting(this.state);
+    this.props.actionMeeting(this.state);
   };
 
-  renderMembers() {
-    if (this.props.members) {
-      return this.props.members.map((item, index) => {
-        return (
-          <React.Fragment key={index}>
-            <input
-              className="input"
-              onChange={this.handleChange}
-              value={item}
-              data-key={index}
-              name="members"
-            />
-          </React.Fragment>
-        );
-      });
-    }
+  renderMeemberInput(value, key) {
     return (
-      <input
-        className="input"
-        onChange={this.handleChange}
-        data-key="0"
-        name="members"
-      />
+      <React.Fragment key={key}>
+        <input
+          className="input membersInput"
+          onChange={this.handleChange}
+          data-key={key}
+          value={value}
+          name="members"
+        />
+      </React.Fragment>
     );
   }
 
+  renderMembers() {
+    if (this.state.members) {
+      return this.state.members.map((item, index) => {
+        return this.renderMeemberInput(item, index);
+      });
+    }
+    return this.renderMeemberInput(undefined, 0);
+  }
+
+  addMember = () => {
+    const members = [...this.state.members, ''];
+    this.setState({ members });
+  };
+
   renderTemplate() {
-    const { day, title, timeEnd, timeBegin } = this.props;
-    console.log(this.props);
+    const { day, title, timeBegin, timeEnd } = this.state;
     return (
       <div className="meetingModal">
         <div className="meetingModalTitle">
@@ -115,7 +128,9 @@ class MeetingModalComponent extends Component {
             <div className="column first">Участники</div>
             <div className="column">
               {this.renderMembers()}
-              <span className="addMember">Добавить участника</span>
+              <span className="addMember" onClick={this.addMember}>
+                Добавить участника
+              </span>
             </div>
           </div>
         </div>

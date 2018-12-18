@@ -2,6 +2,8 @@ import {
   ADD_MEETING,
   ADD_SUCCESS_MEETING,
   ADD_ERROR_MEETING,
+  UPDATE_MEETING,
+  UPDATE_SUCCESS_MEETING,
 } from '../actions/MeetingsActions';
 
 import produce from 'immer';
@@ -45,6 +47,12 @@ export function meetingsReducer(state = initialState, action) {
         draft[action.index].push(action.props);
         break;
       case ADD_ERROR_MEETING:
+        break;
+      case UPDATE_MEETING:
+        break;
+      case UPDATE_SUCCESS_MEETING:
+        console.log(action);
+        draft[action.indexDay][action.indexMeeting] = action.props;
         break;
       default:
         break;

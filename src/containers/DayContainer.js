@@ -1,11 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import DayComponent from '../components/DayComponent';
-import { addMeeting } from '../actions/MeetingsActions';
+import { addMeeting, updateMeeting } from '../actions/MeetingsActions';
 
 class DayContainer extends Component {
   render() {
-    const { index, day, date, meetings, addMeeting } = this.props;
+    const {
+      index,
+      day,
+      date,
+      meetings,
+      addMeeting,
+      updateMeeting,
+    } = this.props;
     console.log('render dayContainer', day);
     return (
       <React.Fragment>
@@ -15,6 +22,7 @@ class DayContainer extends Component {
           date={date}
           meetings={meetings}
           addMeeting={addMeeting}
+          updateMeeting={updateMeeting}
         />
       </React.Fragment>
     );
@@ -31,6 +39,8 @@ const mapStateToProps = (store, { index }) => {
 const mapDispatchToProps = dispatch => {
   return {
     addMeeting: (index, data) => dispatch(addMeeting(index, data)),
+    updateMeeting: (indexDay, indexMeeting, data) =>
+      dispatch(updateMeeting(indexDay, indexMeeting, data)),
   };
 };
 

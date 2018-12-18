@@ -3,6 +3,21 @@ import './css/dayComponent.css';
 import MeetingComponent from './MeetingComponent';
 import MeetingModalComponent from './MeetingModalComponent';
 
+const MONTH = [
+  'Январь',
+  'Февраль',
+  'Март',
+  'Апрель',
+  'Май',
+  'Июнь',
+  'Июль',
+  'Август',
+  'Сентябрь',
+  'Октябрь',
+  'Ноябрь',
+  'Декабрь',
+];
+
 class DayComponent extends Component {
   state = {
     showModalMeeting: false,
@@ -21,6 +36,11 @@ class DayComponent extends Component {
     const { index } = this.props;
     this.hideModalMeeting();
     this.props.addMeeting(index, state);
+  };
+
+  updateMeeting = (indexMeeting, data) => {
+    const indexDay = this.props.index;
+    this.props.updateMeeting(indexDay, indexMeeting, data);
   };
 
   render() {
@@ -46,7 +66,7 @@ class DayComponent extends Component {
             key={'addDay'}
             day={day}
             date={date}
-            addMeeting={this.addMeeting}
+            actionMeeting={this.addMeeting}
             hideModal={this.hideModalMeeting}
           />
         )}
@@ -61,9 +81,10 @@ class DayComponent extends Component {
       return (
         <MeetingComponent
           key={index}
-          index={this.props.index}
+          indexDay={this.props.index}
           day={day}
           indexMeeting={index}
+          updateMeeting={this.updateMeeting}
           meeting={item}
         />
       );
@@ -74,8 +95,12 @@ class DayComponent extends Component {
     const { day, date } = this.props;
     return (
       <React.Fragment>
-        <div className="border-bottom dayName">{day}</div>
-        <div className="border-bottom date">{date}</div>
+        <div className="border-bottom dayName">
+          <strong>{day}</strong>
+        </div>
+        <div className="border-bottom date">
+          {new Date(date).getDate()} {MONTH[new Date(date).getMonth()]}
+        </div>
         <div onDoubleClick={this.handleDoubleClick}>
           {this.renderMeetings()}
         </div>

@@ -1,4 +1,9 @@
 .meetingModalComponent {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -ms-user-select: none; 
+    user-select: none;
     display: block;
     position: fixed;
     width: 100%;
@@ -36,6 +41,10 @@
 .meetingModalForm .row {
     display: flex;
     align-content: space-between;
+}
+
+.meetingModalForm .membersInput {
+    margin-bottom: 5px;
 }
 
 .meetingModalForm {
