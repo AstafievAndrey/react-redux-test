@@ -25,7 +25,10 @@ class DayComponent extends Component {
 
   handleDoubleClick = e => {
     e.preventDefault();
-    this.setState({ showModalMeeting: true });
+    const { disabled, date } = this.props;
+    if (disabled !== true && date > new Date().setHours(0, 0)) {
+      this.setState({ showModalMeeting: true });
+    }
   };
 
   hideModalMeeting = () => {
@@ -45,9 +48,11 @@ class DayComponent extends Component {
 
   render() {
     console.log('render DayComponent');
+    const { disabled } = this.props;
     return (
       <div
-        className="dayComponent height-100"
+        className={`dayComponent height-100 
+                    ${disabled === true ? 'disabled' : ''}`}
         onDoubleClick={this.handleDoubleClick}
       >
         {this.renderTemplate()}
@@ -75,7 +80,7 @@ class DayComponent extends Component {
   }
 
   renderMeetings() {
-    const { meetings, day } = this.props;
+    const { meetings, day, date } = this.props;
     console.log(this.props);
     return meetings.map((item, index) => {
       return (
@@ -83,6 +88,7 @@ class DayComponent extends Component {
           key={index}
           indexDay={this.props.index}
           day={day}
+          date={date}
           indexMeeting={index}
           updateMeeting={this.updateMeeting}
           meeting={item}
@@ -98,11 +104,13 @@ class DayComponent extends Component {
         <div className="border-bottom dayName">
           <strong>{day}</strong>
         </div>
-        <div className="border-bottom date">
-          {new Date(date).getDate()} {MONTH[new Date(date).getMonth()]}
-        </div>
-        <div onDoubleClick={this.handleDoubleClick}>
-          {this.renderMeetings()}
+        <div>
+          <div className="border-bottom date">
+            {new Date(date).getDate()} {MONTH[new Date(date).getMonth()]}
+          </div>
+          <div onDoubleClick={this.handleDoubleClick}>
+            {this.renderMeetings()}
+          </div>
         </div>
       </React.Fragment>
     );

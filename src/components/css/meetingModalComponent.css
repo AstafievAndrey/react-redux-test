@@ -20,6 +20,14 @@
     margin: 10% auto;    
 }
 
+.meetingModal .input:disabled {
+    border: none;
+    background: none;
+    color: black;
+    min-width: 145px !important;
+    max-width: 145px !important;
+}
+
 .meetingModal>div {
     padding: 5px;
 }
@@ -28,6 +36,10 @@
     border-bottom: 1px solid #bebebe;
     display: flex;
     padding: 10px !important;
+}
+
+.meetingModalTitle.grey {
+    background: #c4c4c4;
 }
 
 .meetingModalTitle .title{

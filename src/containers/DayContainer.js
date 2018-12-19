@@ -14,6 +14,10 @@ class DayContainer extends Component {
       updateMeeting,
     } = this.props;
     console.log('render dayContainer', day);
+    const disabled =
+      new Date(date).getDay() === 0 || new Date(date).getDay() === 6
+        ? true
+        : false;
     return (
       <React.Fragment>
         <DayComponent
@@ -21,6 +25,7 @@ class DayContainer extends Component {
           day={day}
           date={date}
           meetings={meetings}
+          disabled={disabled}
           addMeeting={addMeeting}
           updateMeeting={updateMeeting}
         />

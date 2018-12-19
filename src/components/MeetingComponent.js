@@ -26,7 +26,7 @@ class MeetingComponent extends Component {
   };
 
   renderTemplate() {
-    const { day } = this.props;
+    const { day, date } = this.props;
     const { timeBegin, timeEnd, members, title } = this.props.meeting;
     const { showModalMeeting } = this.state;
     return (
@@ -36,6 +36,7 @@ class MeetingComponent extends Component {
           <MeetingModalComponent
             day={day}
             title={title}
+            date={date}
             timeBegin={timeBegin}
             timeEnd={timeEnd}
             members={members}

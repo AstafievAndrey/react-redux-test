@@ -5,6 +5,11 @@
     width: 250px;
     border: 1px solid #e5e5e5;
     border-right: none;
+    box-sizing: border-box;
+}
+
+.dayComponent.disabled {
+    background: #f1f1f1;
 }
 
 .dayComponent .date {
@@ -14,6 +19,7 @@
 .dayComponent .dayName {
     padding: 10px;
     text-align: center;
+    background: white;
 }
 
 .dayComponent .border-bottom {

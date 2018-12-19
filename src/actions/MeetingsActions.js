@@ -8,7 +8,7 @@ export const UPDATE_ERROR_MEETING = 'UPDATE_ERROR_MEETING';
 
 function emptyMembers(data) {
   data.members = data.members.filter(member => {
-    return member !== '' && member !== undefined;
+    return member.name !== '' && member.name !== undefined;
   });
   return data;
 }
