@@ -41,8 +41,80 @@ const initialState = [
       ],
     },
   ],
-  [],
-  [],
+  [
+    {
+      title: 'тема встречи',
+      timeBegin: '16:30',
+      timeEnd: '18:30',
+      members: [
+        { name: 'Участник 1', active: true },
+        { name: 'Участник 2', active: false },
+        { name: 'Участник 3', active: true },
+      ],
+    },
+    {
+      title: 'тема встречи',
+      timeBegin: '08:30',
+      timeEnd: '10:30',
+      members: [
+        { name: 'Участник 1', active: true },
+        { name: 'Участник 2', active: false },
+        { name: 'Участник 3', active: true },
+      ],
+    },
+    {
+      title: 'тема встречи',
+      timeBegin: '11:30',
+      timeEnd: '12:30',
+      members: [],
+    },
+  ],
+  [
+    {
+      title: 'тема встречи',
+      timeBegin: '16:30',
+      timeEnd: '18:30',
+      members: [
+        { name: 'Участник 1', active: true },
+        { name: 'Участник 2', active: false },
+        { name: 'Участник 3', active: true },
+      ],
+    },
+    {
+      title: 'тема встречи',
+      timeBegin: '08:30',
+      timeEnd: '10:30',
+      members: [
+        { name: 'Участник 1', active: true },
+        { name: 'Участник 2', active: false },
+        { name: 'Участник 3', active: true },
+      ],
+    },
+    {
+      title: 'тема встречи',
+      timeBegin: '11:30',
+      timeEnd: '12:30',
+      members: [],
+    },
+    {
+      title: 'тема встречи',
+      timeBegin: '06:30',
+      timeEnd: '07:30',
+      members: [
+        { name: 'Участник 1', active: false },
+        { name: 'Участник 2', active: false },
+      ],
+    },
+    {
+      title: 'тема встречи',
+      timeBegin: '18:30',
+      timeEnd: '22:30',
+      members: [
+        { name: 'Участник 1', active: false },
+        { name: 'Участник 2', active: false },
+      ],
+    },
+  ],
   [],
   [],
   [],

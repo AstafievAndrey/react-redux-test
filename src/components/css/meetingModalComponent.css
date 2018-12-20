@@ -28,6 +28,39 @@
     max-width: 145px !important;
 }
 
+.meetingModal .input:read-only {
+    background: #f1f1f1;
+    -webkit-user-select: none;  
+    -moz-user-select: none;    
+    -ms-user-select: none;      
+    user-select: none;
+}
+
+.meetingModal .input::selection {
+    background: none;
+}
+
+.meetingModal .input:focus::selection {
+    background: #5499d9;
+    color:whitesmoke;
+}
+
+.meetingModal .input:read-only:focus {
+    border: 1px solid #b5b5b5;
+}
+
+.meetingModal .message .error {
+    color: #721c24;
+    padding: .75rem 1.25rem;
+    background-color: #f8d7da;
+}
+
+.meetingModal .message .warning {
+    color: #856404;
+    padding: .75rem 1.25rem;
+    background-color: #fff3cd;
+}
+
 .meetingModal>div {
     padding: 5px;
 }

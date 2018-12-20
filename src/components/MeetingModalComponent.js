@@ -15,11 +15,24 @@ class MeetingModalComponent extends Component {
         ? this.props.members
         : [{ name: '', active: false }]),
     ];
+    const dt = new Date();
+    const floor = Math.floor(dt.getMinutes() / 10);
+    let timeBegin = `${floor < 3 ? dt.getHours() : dt.getHours() + 1}:${
+      floor < 3 ? '30' : '00'
+    }`;
+    let timeEnd = new Date(
+      new Date(dt).setHours(
+        timeBegin.split(':')[0],
+        timeBegin.split(':')[1] + 30
+      )
+    );
     return {
       title: this.props.title || '',
-      timeBegin: this.props.timeBegin || '00:00',
-      timeEnd: this.props.timeEnd || '00:00',
+      timeBegin: this.props.timeBegin || timeBegin,
+      timeEnd:
+        this.props.timeEnd || `${timeEnd.getHours()}:${timeEnd.getMinutes()}`,
       day: this.props.day || '',
+      messages: { warning: [], error: [] },
       members,
     };
   }
@@ -33,7 +46,6 @@ class MeetingModalComponent extends Component {
     this.forceUpdate();
     const target = e.target;
     const name = target.name;
-    // let members = [...this.state.members];
     const setMember = (key, name, value) => {
       let members = [...this.state.members];
       members[key][name] = String(value);
@@ -63,7 +75,9 @@ class MeetingModalComponent extends Component {
   };
 
   checkActive() {
+    // const msgs = 'В активную встречу нельзя добавлять участников';
     const { date } = this.props;
+    // let messages = this.state.messages;
     let timeBegin = null,
       timeEnd = null;
     timeBegin = ((timeBegin = this.state.timeBegin.split(':')),
@@ -77,7 +91,18 @@ class MeetingModalComponent extends Component {
     }
     if (timeBegin < new Date() && timeEnd > new Date()) {
       active = true;
+      // if(messages.warning.find(item => item === msgs) === undefined){
+      //   messages.warning.push(msgs);
+      //   this.setState({messages});
+      // }
     }
+    // else {
+    //   let index = messages.warning.findIndex(item => item === msgs);
+    //   if (index !== -1) {
+    //     messages.warning.splice(index, 1);
+    //     this.setState({messages});
+    //   }
+    // }
     return { inactive, active };
   }
 
@@ -154,6 +179,7 @@ class MeetingModalComponent extends Component {
   };
 
   renderInputTime(name) {
+    const checkActive = this.checkActive();
     const { date } = this.props;
     const timeBegin = this.state.timeBegin.split(':');
     let min = `${
@@ -176,6 +202,7 @@ class MeetingModalComponent extends Component {
         step="1800"
         pattern="[0-24]{2}:(30|00)"
         min={min}
+        readOnly={checkActive.inactive || checkActive.active}
         name={name}
       />
     );
@@ -204,30 +231,57 @@ class MeetingModalComponent extends Component {
 
   renderAction() {
     const checkActive = this.checkActive();
-    const save = () => {
-      return (
-        <div className="btn btn-primary" onClick={this.handleSubmit}>
-          сохранить
-        </div>
-      );
-    };
+    const save = () => (
+      <div className="btn btn-primary" onClick={this.handleSubmit}>
+        сохранить
+      </div>
+    );
+    const cancel = () => (
+      <div className="btn" onClick={this.hideModal}>
+        отмена
+      </div>
+    );
     return (
       <div className="meetingModalAction">
-        <div className="btn" onClick={this.hideModal}>
-          отмена
-        </div>
+        {checkActive.active === false && cancel()}
         {(checkActive.inactive === false || checkActive.active === true) &&
           save()}
       </div>
     );
   }
 
+  renderMessage() {
+    const checkActive = this.checkActive();
+    const msgs = name => {
+      if (this.state.messages[name].length) {
+        return (
+          <div className={name}>
+            {this.state.messages[name].map((item, index) => (
+              <div key={index}>{item}</div>
+            ))}
+          </div>
+        );
+      }
+    };
+    return (
+      <React.Fragment>
+        {checkActive.inactive !== true && (
+          <div className="message">
+            {msgs('warning')}
+            {msgs('error')}
+          </div>
+        )}
+      </React.Fragment>
+    );
+  }
+
   renderTemplate() {
     const { day, title } = this.state;
+    const checkActive = this.checkActive();
     return (
       <div className="meetingModal">
         {this.renderTitle()}
-        <div className="meetingModalForm">
+        <form name="meetingModalForm" className="meetingModalForm">
           <div className="row">
             <div className="column first">Тема встречи</div>
             <div className="column">
@@ -235,14 +289,15 @@ class MeetingModalComponent extends Component {
                 className="input"
                 name="title"
                 onChange={this.handleChange}
-                value={title}
+                defaultValue={title}
+                readOnly={checkActive.inactive || checkActive.active}
               />
             </div>
           </div>
           <div className="row">
             <div className="column first">День встречи</div>
             <div className="column">
-              <input className="input" value={day} readOnly />
+              <input className="input" defaultValue={day} readOnly />
             </div>
           </div>
           <div className="row">
@@ -257,7 +312,8 @@ class MeetingModalComponent extends Component {
             <div className="column first">Участники</div>
             <div className="column">{this.renderMembers()}</div>
           </div>
-        </div>
+        </form>
+        {this.renderMessage()}
         {this.renderAction()}
       </div>
     );

@@ -82,19 +82,28 @@ class DayComponent extends Component {
   renderMeetings() {
     const { meetings, day, date } = this.props;
     console.log(this.props);
-    return meetings.map((item, index) => {
-      return (
-        <MeetingComponent
-          key={index}
-          indexDay={this.props.index}
-          day={day}
-          date={date}
-          indexMeeting={index}
-          updateMeeting={this.updateMeeting}
-          meeting={item}
-        />
-      );
-    });
+    return meetings
+      .slice()
+      .sort((a, b) => {
+        let ATimeBegin = a.timeBegin.split(':');
+        let BTimeBegin = b.timeBegin.split(':');
+        ATimeBegin = new Date(date).setHours(ATimeBegin[0], ATimeBegin[1]);
+        BTimeBegin = new Date(date).setHours(BTimeBegin[0], BTimeBegin[1]);
+        return ATimeBegin - BTimeBegin;
+      })
+      .map((item, index) => {
+        return (
+          <MeetingComponent
+            key={index}
+            indexDay={this.props.index}
+            day={day}
+            date={date}
+            indexMeeting={index}
+            updateMeeting={this.updateMeeting}
+            meeting={item}
+          />
+        );
+      });
   }
 
   renderTemplate() {
