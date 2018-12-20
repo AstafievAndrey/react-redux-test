@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import DayComponent from '../components/DayComponent';
 import { addMeeting, updateMeeting } from '../actions/MeetingsActions';
+import { showMessage } from '../actions/MessagesActions';
 
 class DayContainer extends Component {
   render() {
@@ -44,6 +45,7 @@ const mapStateToProps = (store, { index }) => {
 const mapDispatchToProps = dispatch => {
   return {
     addMeeting: (index, data) => dispatch(addMeeting(index, data)),
+    showMessage: msgs => dispatch(showMessage(msgs)),
     updateMeeting: (indexDay, indexMeeting, data) =>
       dispatch(updateMeeting(indexDay, indexMeeting, data)),
   };

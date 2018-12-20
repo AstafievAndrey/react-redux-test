@@ -1,4 +1,5 @@
 import { store } from '../store/configureStore'; //сервера нет будем проверять на то что хранится в памяти
+import { SHOW_MESSAGE } from './MessagesActions';
 export const ADD_MEETING = 'ADD_MEETING';
 export const ADD_SUCCESS_MEETING = 'ADD_SUCCESS_MEETING';
 export const ADD_ERROR_MEETING = 'ADD_ERROR_MEETING';
@@ -20,6 +21,7 @@ export function addMeeting(index, data) {
     let errors = [];
     data = emptyMembers(data);
     dispatch({ type: ADD_MEETING });
+    dispatch({ type: SHOW_MESSAGE });
 
     const dt = (date, time) => {
       time = time.split(':');
