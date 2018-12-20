@@ -32,6 +32,7 @@ class MeetingModalComponent extends Component {
       timeEnd:
         this.props.timeEnd || `${timeEnd.getHours()}:${timeEnd.getMinutes()}`,
       day: this.props.day || '',
+      date: this.props.date,
       messages: { warning: [], error: [] },
       members,
     };
@@ -86,6 +87,7 @@ class MeetingModalComponent extends Component {
     new Date(date).setHours(timeEnd[0], timeEnd[1]));
     let inactive = false;
     let active = false;
+    console.log(timeEnd, this.state.timeEnd);
     if (date < new Date().setHours(0, 0) || timeEnd < new Date()) {
       inactive = true;
     }
@@ -103,6 +105,7 @@ class MeetingModalComponent extends Component {
     //     this.setState({messages});
     //   }
     // }
+    console.log({ inactive, active });
     return { inactive, active };
   }
 

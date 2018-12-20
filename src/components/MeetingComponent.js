@@ -23,6 +23,7 @@ class MeetingComponent extends Component {
   updateMeeting = data => {
     const { indexMeeting } = this.props;
     this.props.updateMeeting(indexMeeting, data);
+    this.hideModalMeeting();
   };
 
   renderTemplate() {

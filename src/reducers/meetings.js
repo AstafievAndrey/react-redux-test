@@ -115,7 +115,28 @@ const initialState = [
       ],
     },
   ],
-  [],
+  [
+    {
+      title: 'тема встречи',
+      timeBegin: '00:00',
+      timeEnd: '01:00',
+      members: [
+        { name: 'Участник 1', active: true },
+        { name: 'Участник 2', active: false },
+        { name: 'Участник 3', active: true },
+      ],
+    },
+    {
+      title: 'тема встречи',
+      timeBegin: '00:00',
+      timeEnd: '10:00',
+      members: [
+        { name: 'Участник 1', active: true },
+        { name: 'Участник 2', active: false },
+        { name: 'Участник 3', active: true },
+      ],
+    },
+  ],
   [],
   [],
 ];
@@ -129,11 +150,12 @@ export function meetingsReducer(state = initialState, action) {
         draft[action.index].push(action.props);
         break;
       case ADD_ERROR_MEETING:
+        console.log(state, action);
+        // draft[action.index].messages.errors = action.errors;
         break;
       case UPDATE_MEETING:
         break;
       case UPDATE_SUCCESS_MEETING:
-        console.log(action);
         draft[action.indexDay][action.indexMeeting] = action.props;
         break;
       default:

@@ -37,7 +37,7 @@ class DayComponent extends Component {
 
   addMeeting = state => {
     const { index } = this.props;
-    this.hideModalMeeting();
+    // this.hideModalMeeting();
     this.props.addMeeting(index, state);
   };
 
