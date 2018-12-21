@@ -1,0 +1,32 @@
+.messagesComponent {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  width: 400px;
+}
+
+.messagesComponent>div {
+  margin-bottom: 5px;
+}
+
+.messagesComponent .errors {
+  cursor: pointer;
+  color: #721c24;
+  padding: .75rem 1.25rem;
+  border: 1px solid transparent;
+  background-color: #f8d7da;
+}
+.messagesComponent .errors:hover {
+  border-color: #721c24;
+}
+
+.messagesComponent .warnings {
+  cursor: pointer;
+  color: #856404;
+  padding: .75rem 1.25rem;
+  border: 1px solid transparent;
+  background-color: #fff3cd;
+}
+.messagesComponent .warnings:hover{
+  border-color: #856404;
+}

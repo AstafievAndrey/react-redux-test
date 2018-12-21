@@ -1,5 +1,5 @@
 import { store } from '../store/configureStore'; //сервера нет будем проверять на то что хранится в памяти
-import { SHOW_MESSAGE } from './MessagesActions';
+import { SHOW_MESSAGE_ERROR } from './MessagesActions';
 export const ADD_MEETING = 'ADD_MEETING';
 export const ADD_SUCCESS_MEETING = 'ADD_SUCCESS_MEETING';
 export const ADD_ERROR_MEETING = 'ADD_ERROR_MEETING';
@@ -21,7 +21,6 @@ export function addMeeting(index, data) {
     let errors = [];
     data = emptyMembers(data);
     dispatch({ type: ADD_MEETING });
-    dispatch({ type: SHOW_MESSAGE });
 
     const dt = (date, time) => {
       time = time.split(':');
@@ -58,14 +57,12 @@ export function addMeeting(index, data) {
     });
 
     if (errors.length) {
-      console.log(ADD_ERROR_MEETING);
-      dispatch({ type: ADD_ERROR_MEETING, index, props: data, errors });
+      dispatch({ type: SHOW_MESSAGE_ERROR, props: errors });
     } else {
       setTimeout(() => {
         dispatch({ type: ADD_SUCCESS_MEETING, index, props: data });
       }, 1000);
     }
-    // dispatch({type: ADD_SUCCESS_MEETING, index, props: data});
   };
 }
 

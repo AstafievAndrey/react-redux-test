@@ -1,34 +1,39 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { removeMessage } from '../actions/MessagesActions';
 import MessagesComponent from '../components/MessagesComponent';
 
 class MessagesContainer extends Component {
   render() {
     console.log('render MessagesContainer');
+    const { removeMessage } = this.props;
+    const { errors, warnings } = this.props.messages;
+    console.log(this.props);
     return (
       <React.Fragment>
-        <MessagesComponent />
+        <MessagesComponent
+          errors={errors}
+          warnings={warnings}
+          removeMessage={removeMessage}
+        />
       </React.Fragment>
     );
   }
 }
 
-// const mapStateToProps = (store, { index }) => {
-//   // console.log(store);
-//   return {
-//     meetings: store.meetings[index],
-//   };
-// };
+const mapStateToProps = store => {
+  return {
+    messages: store.messages,
+  };
+};
 
-// const mapDispatchToProps = dispatch => {
-//   return {
-//     addMeeting: (index, data) => dispatch(addMeeting(index, data)),
-//     updateMeeting: (indexDay, indexMeeting, data) =>
-//       dispatch(updateMeeting(indexDay, indexMeeting, data)),
-//   };
-// };
+const mapDispatchToProps = dispatch => {
+  return {
+    removeMessage: (index, type) => dispatch(removeMessage(index, type)),
+  };
+};
 
 export default connect(
-  null,
-  null
+  mapStateToProps,
+  mapDispatchToProps
 )(MessagesContainer);

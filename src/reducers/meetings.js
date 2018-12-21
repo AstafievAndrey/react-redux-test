@@ -129,7 +129,7 @@ const initialState = [
     {
       title: 'тема встречи',
       timeBegin: '00:00',
-      timeEnd: '10:00',
+      timeEnd: '19:00',
       members: [
         { name: 'Участник 1', active: true },
         { name: 'Участник 2', active: false },
@@ -151,7 +151,6 @@ export function meetingsReducer(state = initialState, action) {
         break;
       case ADD_ERROR_MEETING:
         console.log(state, action);
-        // draft[action.index].messages.errors = action.errors;
         break;
       case UPDATE_MEETING:
         break;

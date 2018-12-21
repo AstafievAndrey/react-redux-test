@@ -81,7 +81,7 @@ class DayComponent extends Component {
 
   renderMeetings() {
     const { meetings, day, date } = this.props;
-    console.log(this.props);
+    // console.log(this.props);
     return meetings
       .slice()
       .sort((a, b) => {
