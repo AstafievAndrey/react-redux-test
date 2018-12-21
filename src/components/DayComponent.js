@@ -36,7 +36,7 @@ class DayComponent extends Component {
   }
 
   componentWillUnmount() {
-    this.state.subscriptionSuccess.unsubscrive();
+    this.state.subscriptionSuccess.unsubscribe();
   }
 
   handleDoubleClick = e => {
