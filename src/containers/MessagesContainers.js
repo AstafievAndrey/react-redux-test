@@ -7,13 +7,13 @@ class MessagesContainer extends Component {
   render() {
     console.log('render MessagesContainer');
     const { removeMessage } = this.props;
-    const { errors, warnings } = this.props.messages;
-    console.log(this.props);
+    const { errors, warnings, success } = this.props.messages;
     return (
       <React.Fragment>
         <MessagesComponent
           errors={errors}
           warnings={warnings}
+          success={success}
           removeMessage={removeMessage}
         />
       </React.Fragment>

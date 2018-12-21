@@ -38,6 +38,15 @@ class DayContainer extends Component {
 }
 
 const mapStateToProps = (store, { index }) => {
+  // function select(state) {
+  //   return state.some.deep.property
+  // }
+  // let currentValue;
+  // store.subscribe(function(){
+  //   let previousValue = currentValue
+  //   currentValue = select(store.getState())
+  //   console.log(previousValue, currentValue);
+  // });
   return {
     meetings: store.meetings[index],
   };

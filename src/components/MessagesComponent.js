@@ -7,7 +7,6 @@ class MessagesComponent extends Component {
   };
 
   renderMessage(messages, type) {
-    console.log(messages);
     return messages
       .slice()
       .reverse()
@@ -25,12 +24,12 @@ class MessagesComponent extends Component {
   }
 
   render() {
-    const { errors, warnings } = this.props;
-    console.log(this.props);
+    const { errors, warnings, success } = this.props;
     return (
       <div className="messagesComponent">
         {this.renderMessage(errors, 'errors')}
         {this.renderMessage(warnings, 'warnings')}
+        {this.renderMessage(success, 'success')}
       </div>
     );
   }

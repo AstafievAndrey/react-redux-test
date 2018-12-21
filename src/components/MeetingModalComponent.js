@@ -55,48 +55,78 @@ class MeetingModalComponent extends Component {
       members[key][name] = String(value);
       this.setState({ members });
     };
-    console.log(name, target.checked);
     switch (name) {
       case 'members':
         setMember(target.getAttribute('data-key'), 'name', target.value);
         break;
       default:
-        console.log(target.checkValidity());
-        if (!target.checkValidity()) {
-          target.style.borderColor = 'red';
-        } else {
-          target.style.borderColor = '';
-        }
         this.setState({
           [name]: target.value,
         });
     }
   };
 
+  // проверка на корректное заполенность полей
+  validate() {
+    if (!document.meetingModalForm.checkValidity()) {
+      this.showMessage('errors', ['Заполите все поля корректно']);
+      return;
+    }
+    const checkRegexTime = value => {
+      return /^[0-9]{2}:(30|00)$/.test(value);
+    };
+    const { timeEnd, timeBegin } = document.meetingModalForm;
+    if (!checkRegexTime(timeBegin.value)) {
+      this.showMessage('errors', ['Дата начала имеет не верный формат']);
+      return;
+    }
+    if (!checkRegexTime(timeEnd.value)) {
+      this.showMessage('errors', ['Дата окончания имеет не верный формат']);
+      return;
+    }
+    if (parseInt(timeEnd.value) < parseInt(timeBegin.value)) {
+      this.showMessage('errors', [
+        'Дата окончания не может быть раньше даты начала',
+      ]);
+      return;
+    }
+    return true;
+  }
+
   handleSubmit = e => {
     e.preventDefault();
-    this.props.actionMeeting(this.state);
+    const { newMeeting } = this.props;
+    //проверки при добавлении даты
+    if (newMeeting === true) {
+      this.validate() === true && this.props.actionMeeting(this.state);
+    } else {
+      this.props.actionMeeting(this.state);
+    }
   };
 
   checkActive() {
-    // const msgs = 'В активную встречу нельзя добавлять участников';
-    const { date } = this.props;
+    const { date, newMeeting } = this.props;
     let timeBegin = null,
-      timeEnd = null;
+      timeEnd = null,
+      inactive = false,
+      active = false;
+
+    if (newMeeting === true) {
+      return { inactive, active };
+    }
+
     timeBegin = ((timeBegin = this.state.timeBegin.split(':')),
     new Date(date).setHours(timeBegin[0], timeBegin[1]));
     timeEnd = ((timeEnd = this.state.timeEnd.split(':')),
     new Date(date).setHours(timeEnd[0], timeEnd[1]));
-    let inactive = false;
-    let active = false;
-    console.log(timeEnd, this.state.timeEnd);
+
     if (date < new Date().setHours(0, 0) || timeEnd < new Date()) {
       inactive = true;
     }
     if (timeBegin < new Date() && timeEnd > new Date()) {
       active = true;
     }
-    console.log({ inactive, active });
+
     return { inactive, active };
   }
 
@@ -133,6 +163,7 @@ class MeetingModalComponent extends Component {
             data-key={key}
             value={value.name}
             disabled={disabled}
+            required
             name="members"
           />
         </span>
@@ -174,19 +205,6 @@ class MeetingModalComponent extends Component {
 
   renderInputTime(name) {
     const checkActive = this.checkActive();
-    const { date } = this.props;
-    const timeBegin = this.state.timeBegin.split(':');
-    let min = `${
-      new Date(date) > new Date() ? '00:00' : new Date().getHours()
-    }:00`;
-    if (name === 'timeEnd') {
-      let dt = new Date(
-        new Date(date).setHours(timeBegin[0], parseInt(timeBegin[1]) + 30)
-      );
-      min = `${
-        dt.getHours() < 10 ? '0' : ''
-      }${dt.getHours()}:${dt.getMinutes()}`;
-    }
     return (
       <input
         className="input"
@@ -194,8 +212,6 @@ class MeetingModalComponent extends Component {
         value={this.state[name]}
         type="time"
         step="1800"
-        pattern="[0-24]{2}:(30|00)"
-        min={min}
         readOnly={checkActive.inactive || checkActive.active}
         name={name}
       />
@@ -259,6 +275,7 @@ class MeetingModalComponent extends Component {
                 name="title"
                 onChange={this.handleChange}
                 defaultValue={title}
+                required
                 readOnly={checkActive.inactive || checkActive.active}
               />
             </div>

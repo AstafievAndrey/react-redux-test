@@ -1,5 +1,6 @@
 import { store } from '../store/configureStore'; //сервера нет будем проверять на то что хранится в памяти
-import { SHOW_MESSAGE_ERROR } from './MessagesActions';
+import { SHOW_MESSAGE_ERROR, SHOW_MESSAGE_SUCCESS } from './MessagesActions';
+import { success } from '../observable/success';
 export const ADD_MEETING = 'ADD_MEETING';
 export const ADD_SUCCESS_MEETING = 'ADD_SUCCESS_MEETING';
 export const ADD_ERROR_MEETING = 'ADD_ERROR_MEETING';
@@ -29,7 +30,7 @@ export function addMeeting(index, data) {
     };
 
     // проверка на существование встречи
-    storeLocal.meetings[index].forEach(element => {
+    storeLocal.meetings[index].some(element => {
       let { date, timeBegin, timeEnd } = element;
       date = date || storeLocal.meetings[index].date || data.date;
       const check = (begin, end, current, type = 'begin') => {
@@ -53,7 +54,9 @@ export function addMeeting(index, data) {
         check(timeBeginMeeting, timeEndMeeting, timeEndCurent, 'end')
       ) {
         errors.push('время занято');
+        return true;
       }
+      return false;
     });
 
     if (errors.length) {
@@ -61,6 +64,8 @@ export function addMeeting(index, data) {
     } else {
       setTimeout(() => {
         dispatch({ type: ADD_SUCCESS_MEETING, index, props: data });
+        success.next({ type: ADD_SUCCESS_MEETING, index, props: data });
+        dispatch({ type: SHOW_MESSAGE_SUCCESS, props: ['Встреча добавлена'] });
       }, 1000);
     }
   };
@@ -71,6 +76,10 @@ export function updateMeeting(indexDay, indexMeeting, data) {
     dispatch({ type: UPDATE_MEETING });
     data = emptyMembers(data);
     setTimeout(() => {
+      dispatch({
+        type: SHOW_MESSAGE_SUCCESS,
+        props: ['Встреча отредактирована'],
+      });
       dispatch({
         type: UPDATE_SUCCESS_MEETING,
         props: data,

@@ -30,3 +30,14 @@
 .messagesComponent .warnings:hover{
   border-color: #856404;
 }
+
+.messagesComponent .success {
+  cursor: pointer;
+  color: #155724;
+  padding: .75rem 1.25rem;
+  border: 1px solid transparent;
+  background-color: #d4edda;
+}
+.messagesComponent .success:hover {
+  border-color: #155724;
+}

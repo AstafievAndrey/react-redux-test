@@ -1,5 +1,6 @@
 export const SHOW_MESSAGE_ERROR = 'SHOW_MESSAGE_ERROR';
 export const SHOW_MESSAGE_WARNING = 'SHOW_MESSAGE_WARNING';
+export const SHOW_MESSAGE_SUCCESS = 'SHOW_MESSAGE_SUCCESS';
 export const REMOVE_MESSAGE = 'REMOVE_MESSAGE';
 export const SHOW_MESSAGE = 'SHOW_MESSAGE';
 
@@ -12,6 +13,9 @@ export function showMessage(type, message) {
         break;
       case 'warnings':
         dispatch({ type: SHOW_MESSAGE_WARNING, props: message });
+        break;
+      case 'success':
+        dispatch({ type: SHOW_MESSAGE_SUCCESS, props: message });
         break;
       default:
         dispatch({

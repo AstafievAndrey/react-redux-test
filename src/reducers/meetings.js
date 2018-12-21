@@ -128,7 +128,7 @@ const initialState = [
     },
     {
       title: 'тема встречи',
-      timeBegin: '00:00',
+      timeBegin: '02:00',
       timeEnd: '19:00',
       members: [
         { name: 'Участник 1', active: true },

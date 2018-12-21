@@ -3,6 +3,8 @@ import './css/dayComponent.css';
 import MeetingComponent from './MeetingComponent';
 import MeetingModalComponent from './MeetingModalComponent';
 
+import { success } from '../observable/success';
+
 const MONTH = [
   'Январь',
   'Февраль',
@@ -22,6 +24,20 @@ class DayComponent extends Component {
   state = {
     showModalMeeting: false,
   };
+
+  componentDidMount() {
+    this.setState({
+      subscriptionSuccess: success.subscribe(data => {
+        if (this.props.index === data.index) {
+          this.hideModalMeeting();
+        }
+      }),
+    });
+  }
+
+  componentWillUnmount() {
+    this.state.subscriptionSuccess.unsubscrive();
+  }
 
   handleDoubleClick = e => {
     e.preventDefault();
@@ -74,6 +90,7 @@ class DayComponent extends Component {
             actionMeeting={this.addMeeting}
             hideModal={this.hideModalMeeting}
             showMessage={showMessage}
+            newMeeting={true}
           />
         )}
       </React.Fragment>
