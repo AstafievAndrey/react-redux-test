@@ -63,7 +63,7 @@ class DayComponent extends Component {
 
   renderMeetingModal() {
     const { showModalMeeting } = this.state;
-    const { day, date } = this.props;
+    const { day, date, showMessage } = this.props;
     return (
       <React.Fragment>
         {showModalMeeting && (
@@ -73,6 +73,7 @@ class DayComponent extends Component {
             date={date}
             actionMeeting={this.addMeeting}
             hideModal={this.hideModalMeeting}
+            showMessage={showMessage}
           />
         )}
       </React.Fragment>
@@ -80,7 +81,7 @@ class DayComponent extends Component {
   }
 
   renderMeetings() {
-    const { meetings, day, date } = this.props;
+    const { meetings, day, date, showMessage } = this.props;
     // console.log(this.props);
     return meetings
       .slice()
@@ -100,6 +101,7 @@ class DayComponent extends Component {
             date={date}
             indexMeeting={index}
             updateMeeting={this.updateMeeting}
+            showMessage={showMessage}
             meeting={item}
           />
         );

@@ -27,7 +27,7 @@ class MeetingComponent extends Component {
   };
 
   renderTemplate() {
-    const { day, date } = this.props;
+    const { day, date, showMessage } = this.props;
     const { timeBegin, timeEnd, members, title } = this.props.meeting;
     const { showModalMeeting } = this.state;
     return (
@@ -43,6 +43,7 @@ class MeetingComponent extends Component {
             members={members}
             hideModal={this.hideModalMeeting}
             actionMeeting={this.updateMeeting}
+            showMessage={showMessage}
           />
         )}
       </React.Fragment>

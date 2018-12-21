@@ -7,17 +7,21 @@ class MessagesComponent extends Component {
   };
 
   renderMessage(messages, type) {
-    return messages.reverse().map((element, index) => {
-      return (
-        <div
-          onClick={() => this.removeMessage(index, type)}
-          className={type}
-          key={`${type}-${index}`}
-        >
-          {element}
-        </div>
-      );
-    });
+    console.log(messages);
+    return messages
+      .slice()
+      .reverse()
+      .map((element, index) => {
+        return (
+          <div
+            onClick={() => this.removeMessage(index, type)}
+            className={type}
+            key={`${type}-${index}`}
+          >
+            {element}
+          </div>
+        );
+      });
   }
 
   render() {

@@ -1,4 +1,8 @@
-import { SHOW_MESSAGE_ERROR, REMOVE_MESSAGE } from '../actions/MessagesActions';
+import {
+  SHOW_MESSAGE_ERROR,
+  REMOVE_MESSAGE,
+  SHOW_MESSAGE_WARNING,
+} from '../actions/MessagesActions';
 import produce from 'immer';
 
 const initialState = {
@@ -13,6 +17,9 @@ export function messagesReducer(state = initialState, action) {
     switch (action.type) {
       case SHOW_MESSAGE_ERROR:
         draft.errors = [...draft.errors, ...action.props];
+        break;
+      case SHOW_MESSAGE_WARNING:
+        draft.errors = [...draft.warnings, ...[action.props]];
         break;
       case REMOVE_MESSAGE:
         const { type, index } = action.props;
